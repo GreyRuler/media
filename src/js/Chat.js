@@ -10,50 +10,12 @@ export default class Chat {
 		return '.messages_chat';
 	}
 
-	static get selectorPanelRecord() {
-		return '.panel-record';
-	}
-
-	static get selectorBtnAudio() {
-		return '.btn-audio';
-	}
-
-	static get selectorBtnRecordAudio() {
-		return '.panel-record-audio .btn-record';
-	}
-
-	static get selectorBtnCancelRecordAudio() {
-		return '.panel-record-audio .btn-cancel';
-	}
-
 	static get markup() {
 		return `
 			<div class="chat">
 				<div class="messages_chat"></div>
-				<div class="input-group">
-					<input type="text" class="message_chat form-control"
-						   placeholder="Username">
-					<div class="input-group-text">
-						<div class="panel-record">
-							<button class="btn-control btn-audio"
-							type="button"></button>
-							<button class="btn-control btn-video"
-							type="button"></button>
-						</div>
-						<div class="panel-record-audio d-none">
-							<button class="btn-control btn-record"
-									type="button"></button>
-							<button class="btn-control btn-cancel"
-									type="button"></button>
-						</div>
-						<div class="panel-record-video d-none">
-							<button class="btn-control btn-record"
-									type="button"></button>
-							<button class="btn-control btn-cancel"
-									type="button"></button>
-						</div>
-					</div>
-				</div>
+				<input type="text" class="message_chat form-control"
+					   placeholder="Username">
 			</div>
 		`;
 	}
@@ -101,39 +63,6 @@ export default class Chat {
 
 				messageInput.value = '';
 			}
-		});
-
-		const btnAudio = this.container.querySelector(
-			Chat.selectorBtnAudio,
-		);
-		btnAudio.addEventListener('click', async () => {
-			const stream = await navigator.mediaDevices.getUserMedia({
-				audio: true,
-			});
-
-			const recorder = new MediaRecorder(stream);
-			const chunks = [];
-
-			recorder.addEventListener('start', () => {
-				console.log('start');
-			});
-
-			recorder.addEventListener('start', (event) => {
-				chunks.push(event.data);
-			});
-
-			recorder.addEventListener('stop', () => {
-				const blob = new Blob(chunks);
-
-				audioPlayer.src = URL.createObjectURL(blob);
-			});
-
-			recorder.start();
-
-			audioStop.addEventListener('click', () => {
-				recorder.stop();
-				stream.getTracks().forEach((track) => track.stop());
-			});
 		});
 	}
 
