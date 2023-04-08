@@ -23,7 +23,7 @@
 					<p>Широта и долгота через запятую</p>
 					<input class="form-control" type="text"
 						   name="coordinates" id="coordinates"
-						   pattern="-?\d+.\d+, -?\d+.\d+"
+						   pattern="(?<!.)-?\d+.\d+, [—-]?\d+.\d+(?!.)"
 						   placeholder="-12.12, 12.12">
 					<div class="invalid-feedback">
 						Введите корректные координаты
